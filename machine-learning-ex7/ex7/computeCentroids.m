@@ -25,16 +25,25 @@ centroids = zeros(K, n);
 %
 % Note: You can use a for-loop over the centroids to compute this.
 %
-
-
-
-
-
-
-
-
 % =============================================================
 
+comp_matrix = [X idx];
+comp_matrix = sortrows(comp_matrix, n+1);
 
+% extract unique elements in the apecified column of the matrix
+e = unique(comp_matrix(:,end));
+
+% build a number of matrice depending on the number of unique elements found
+B = cell(size(e));
+
+for i = 1:numel(e)
+    % this is where the actual building of the matrice is done
+    % 
+    % build a matrice using the last element of the last column
+    B{i} = comp_matrix(comp_matrix(:,end) == e(i),:);
+
+
+    compute_mean = mean(B{i});
+    centroids(i, :) = [compute_mean(:,1:end-1)];
 end
 
